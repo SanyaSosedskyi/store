@@ -1,0 +1,90 @@
+extends header
+block main
+    div.adminContainer
+        h1 Панель Администратора
+        div.addCatalog
+            p 1. Добавление категории
+            form(method='POST' action='/admin/addCategory' )
+                input(type='text' name='catName' placeholder='Название категории' required)
+                button(type='submit') Добавить
+        div.addProduct
+            p 2. Добавление товара
+            form(method='POST' action='/admin/addProduct' enctype='multipart/form-data')
+                input(type='text' name='prodName' placeholder='Название товара' required)
+                br
+                br
+                input(type='number' name='prodPrice' placeholder='Цена' required)
+                br
+                br
+                textarea(name='prodDescription' placeholder='Описание' required)
+                br
+                br
+                input(type='number' name='prodQuantity' placeholder='Количество' required)
+                br
+                br
+                select(name='catId')
+                    each c in cat
+                        option= c.name
+                br
+                br
+                label(for='addImage') Добавить изображение
+                input(type='file' name='productImage' id='addImage' required)
+                br
+                br
+                button(type='submit') Добавить товар
+        div.filterOrdersDate
+            p 3. Фильтр заказов по дате
+            form(method='GET' id='filterDateForm')
+                label(for='dateFrom') От
+                input(type='date' name='dateFrom' id='dateFrom' required)
+                br
+                label(for='dateTo') До
+                input(type='date' name='dateTo' id='dateTo' required)
+                button(type='submit') Принять
+                a(href='/admin') Сбросить фильтр
+        div.profileOrders
+            div.filterOrdersDiv
+                h1(style='text-align:center') Заказы (#{orders.length})
+                if(typeLink != 'search')
+                    div.filterOrdersItems
+                        a(href='/admin/checking') На проверке
+                        a(href='/admin/posted') Отправлены покупателю
+                        a(href='/admin/delivered') Доставлены
+            - let user;
+            for order in orders
+                h1 Номер заказа: #{order.id}
+                for orderDetail in orderDetails
+                    if orderDetail.orderId == order.id
+                        div.profileOrdersItem
+                            div.profileOrdersItemImage
+                                -for(let i = 0; i<products.length;i++){if(products[i].id == orderDetail.productId) pId = i}
+                                img(src=`/uploads/${products[pId].img}`)
+                            div.profileOrdersItemInfo
+                                p Название: #{products[pId].name}
+                                p Количество: #{orderDetail.amount}
+                                p Сумма: #{orderDetail.amount * products[pId].price}
+                div.profileOrdersItem.block
+                    -
+                        for(let i = 0;i<users.length;i++){
+                            if(users[i].id == order.userId){
+                                user = users[i];
+                            }
+                        }
+                    p Пользователь: #{user.email}
+                    br
+                    p Дата: #{order.createdAt}
+                    br
+                    p Адресс: #{order.address}
+                    br
+                    p Сумма заказа: #{order.sum}
+                    br
+                    p Статус заказа:
+                        form(method='POST' action=`/admin/update/${order.id}` id='uS')
+                            select(name='status')
+                                option #{order.status}
+                                option Отправлен получателю
+                                option Доставлен
+                            button(type='submit') Изменить
+                    br
+
+                - orderDetailsCast = [];
