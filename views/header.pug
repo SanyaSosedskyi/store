@@ -1,0 +1,32 @@
+doctype html
+html
+    head
+        title Интернет-магазин
+        meta(charset='utf-8')
+        link(rel='stylesheet' href='/css/styles.css')
+    body
+        header
+            nav
+                ul
+                    li
+                        a(href='/catalog/1') Главная
+                    li
+                        a(href='/search') Поиск
+            if role == 'guest' || role == undefined
+                div.authDiv
+                    ul
+                        li
+                            a(href='/login') Войти
+                        li
+                            a(href='/registration') Регистрация
+            else
+                if(role == 'admin')
+                    div.authLogout
+                        a(href='/logout') Выйти
+                        a(href='/admin') Админ
+                else
+                    div.authLogout
+                        a(href='/logout') Выйти
+                        a(href='/profile') Профиль
+                        a(href='/basket') Корзина
+        block main

@@ -1,0 +1,17 @@
+extends header
+block main
+    div.basketDiv
+        for b in basket
+            div.basketProduct
+                img(src=`/uploads/${b.img}` alt='')
+                div.productsItemInfo
+                    div.nameProduct
+                        h3= b.name
+                    div.priceProduct
+                        h3 #{b.amount} штук
+                        h3 цена: #{b.price*b.amount}
+                a(href=`basket/delete/${b.id}`) Отменить
+    div.basketSubmit
+        form(method='POST')
+            input(type='text' name='address' placeholder='Адрес доставки' required)
+            button(type='submit') Заказать

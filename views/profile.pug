@@ -1,0 +1,48 @@
+extends header
+block main
+    div.containerProfile
+        div.profileDiv
+            h2 Информация
+            ul.profileInfo
+                li.profuleInfoItem Имя: #{user.name}
+                li.profileInfoItem E-mail: #{user.email}
+                li.profileInfoItem Телефон: #{user.phone}
+            input(type='button' id='editProfile' value='Изменить данные'
+                onclick='document.getElementById("editProfileDiv").style.display="block"')
+            div#editProfileDiv
+                form(method='POST')
+                    input(type='text' name='profileName' value=`${user.name}` required)
+                    br
+                    input(type='email' name='profileEmail' value=`${user.email}` required)
+                    br
+                    input(type='phone' name='profilePhone' value=`${user.phone}` required)
+                    br
+                    input(type='password' name='profilePassword' placeholder='Новый пароль')
+                    br
+                    button(type='submit') Изменить
+        div.profileOrders
+            -let pId = 0;
+            for ord in orders
+                h1 Номер заказа: #{ord.id}
+                for ordD in orderDetails
+                    if ordD.orderId == ord.id
+                        div.profileOrdersItem
+                            div.profileOrdersItemImage
+                                -for(let i = 0; i<products.length;i++){if(products[i].id == ordD.productId) pId = i}
+                                img(src=`/uploads/${products[pId].img}`)
+                            div.profileOrdersItemInfo
+                                p Название: #{products[pId].name}
+                                p Количество: #{ordD.amount}
+                                p Сумма: #{ordD.amount * products[pId].price}
+                div.profileOrdersItem.block
+                    h3 Адресс: #{ord.address}
+                    br
+                    h3 Статус заказа: #{ord.status}
+                    br
+                    h3 Сумма заказа: #{ord.sum}
+                    br
+                    br
+
+
+
+

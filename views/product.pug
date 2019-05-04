@@ -1,0 +1,30 @@
+extends header
+block main
+    div.container
+        div.catalogMenu
+            h1 Категории
+            ul.catalogList
+                each cat in categories
+                    li.catalogItem
+                        a(href=`/catalog/${cat.id}`)= cat.name
+        div.product
+            div.productDescription
+                img(src=`/uploads/${product.img}`)
+                ul
+                    li= product.name
+                    for p in productArr
+                        li= p
+                    br
+                    li
+                        strong Количество: #{product.quantity}
+            div.productOrder
+                div.productOrderForm
+                    h2 Добавление в корзину
+                    form(method='POST')
+                        input(type='number' name='prodQuantity' placeholder='Количество' required)
+                        span Цена: #{product.price}
+                        if role=='guest'
+                            h2 Необходимо зарегистрироваться
+                        else
+                            button(type='submit') Добавить
+

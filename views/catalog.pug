@@ -1,0 +1,21 @@
+extends header
+block main
+
+    div.container
+        div.catalogMenu
+            h1 Категории
+            ul.catalogList
+                each cat in categories
+                    li.catalogItem
+                        a(href=`${cat.id}`)= cat.name
+        div.products
+            for product in products
+                div.productsItem
+                    img(src=`/uploads/${product.img}` alt='')
+                    div.productsItemInfo
+                        div.nameProduct
+                            h3= product.name
+                        div.priceProduct
+                            h3 #{product.price} грн
+                        a(href=`./${category.id}/${product.id}`) Подробнее
+

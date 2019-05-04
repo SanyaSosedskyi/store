@@ -1,0 +1,7 @@
+extends header
+block main
+    div.searchDiv
+        h1 Поиск
+        form(method='POST' action='search/done')
+            input(type='text' name='productName' placeholder='Название товара' required)
+            button(type='submit') Искать
