@@ -1,4 +1,4 @@
-**Установка СУБД PostgreSQL**
+**Установка СУБД PostgreSQL(Linux)**
 
 `sudo apt-add-repository ppa:pitti/postgresql`
 
