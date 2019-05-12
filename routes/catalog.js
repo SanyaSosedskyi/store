@@ -4,10 +4,7 @@ const Sequelize = require('sequelize');
 const Categories = require('../models/categories');
 const Products = require('../models/products');
 router.get('/', (req,res) => {
-    const role = req.session.role;
-    Categories.findAll({})
-        .then(category => res.render('catalog',{role ,category}))
-
+   res.redirect('/catalog/1')
 });
 
 async function showCatalog(req,res){
