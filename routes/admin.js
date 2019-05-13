@@ -60,14 +60,12 @@ router.get('/:name', async (req,res) => {
                 }
             }
         })
-            console.log('TO SHO ')
             break;
         default:orders = await Orders.findAll({
             where:{
                 status:"Отправлен на проверку"
             }
         })
-            console.log('DA THIS')
             break;
     }
 
